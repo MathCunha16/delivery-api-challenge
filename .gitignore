@@ -1,0 +1,26 @@
+# ================== SEGURANÇA ==================
+.env
+.env.*
+!.env.example
+
+# ================== IDEs ==================
+# IntelliJ
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# VS Code
+.vscode/
+
+# ================== SISTEMA ==================
+.DS_Store
+Thumbs.db
+
+# ================== DOCKER ==================
+
+# ================== PASTAS DE PROJETO ==================
+**/build/
+**/target/
+**/out/
+**/bin/
