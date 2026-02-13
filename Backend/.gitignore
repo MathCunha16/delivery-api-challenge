@@ -1,0 +1,94 @@
+# ================== LOGS & TEMPORÁRIOS ==================
+*.log
+*.log.*
+*.tmp
+hs_err_pid*
+
+# ================== SAÍDA DE COMPILAÇÃO ==================
+/target/
+/build/
+/out/
+/bin/
+
+# ================== GRADLE CACHE  ==================
+.gradle/
+build/
+!gradle/wrapper/gradle-wrapper.jar
+!gradle/wrapper/gradle-wrapper.properties
+
+# ================== PACOTES GERADOS ==================
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+
+# ================== IDEs POPULARES ==================
+
+# IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# Eclipse / Spring Tool Suite
+.classpath
+.project
+.settings/
+.apt_generated
+.factorypath
+.springBeans
+.sts4-cache
+
+# NetBeans
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+.nb-gradle/
+
+# VS Code
+.vscode/
+
+# ================== SISTEMAS OPERACIONAIS ==================
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# ================== EDITORES LINUX ==================
+
+# Arquivos de backup (Gedit, Kate, Emacs)
+*~
+
+# Swap do Vim
+*.swp
+*.swo
+*.swn
+
+# ================== DOCKER ==================
+# O arquivo .dockerignore DEVE ser versionado.
+# Ignorar apenas overrides locais do docker-compose.
+docker-compose.override.yml
+Dockerfile.*.bak
+
+# ================== CI/CD ==================
+# A pasta .github/workflows DEVE ser versionada.
+# Ignorar apenas logs e artefatos gerados pelo CI.
+*.cache
+*.coverage
+coverage/
+
+# ================== VARIÁVEIS DE AMBIENTE ==================
+# Ignorar todos os arquivos .env, exceto o de exemplo.
+.env
+.env.*
+!.env.example
+src/main/resources/keys/private_key.pem
+src/main/resources/keys/public_key.pem
