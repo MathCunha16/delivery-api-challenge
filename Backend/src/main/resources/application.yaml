@@ -1,3 +1,16 @@
 spring:
   application:
     name: delivery-api
+
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/delivery_db}
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:postgres}
+
+  jpa:
+    open-in-view: false
+    show-sql: true
+    properties:
+      hibernate:
+        ddl-auto: validate
+        format_sql: true
