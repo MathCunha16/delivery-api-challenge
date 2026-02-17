@@ -1,5 +1,6 @@
 package com.cocobambu.delivery.dto.request;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
@@ -11,6 +12,7 @@ import java.util.List;
 
 public record CreateOrderItemRequest(
 
+        @JsonProperty("code")
         Integer externalCode,
 
         @NotBlank(message = "item name is requeried")
@@ -22,11 +24,12 @@ public record CreateOrderItemRequest(
 
         @NotNull
         @Positive(message = "Unit price must be greater than 0")
+        @JsonProperty("unit_price")
         BigDecimal unitPrice,
 
         String observations,
 
         @Valid
-        List<CreateCondimentRequest> condiment
+        List<CreateCondimentRequest> condiments
 ) {
 }

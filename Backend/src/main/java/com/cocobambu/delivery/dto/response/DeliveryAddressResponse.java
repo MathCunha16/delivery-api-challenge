@@ -22,6 +22,6 @@ public record DeliveryAddressResponse(
 
         String state,
 
-        CordinatesResponse coordinates
+        CoordinatesResponse coordinates
 ) {
 }
