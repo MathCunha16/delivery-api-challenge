@@ -22,6 +22,8 @@ public record OrderItemsResponse(
 
         Integer quantity,
 
+        BigDecimal discount,
+
         List<CondimentResponse> condiments
 
 ) {

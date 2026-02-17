@@ -10,7 +10,7 @@ public record PaymentResponse(
 
         BigDecimal value,
 
-        @JsonProperty("Pay")
+        @JsonProperty("origin")
         PaymentMethod paymentMethod
 ) {
 }

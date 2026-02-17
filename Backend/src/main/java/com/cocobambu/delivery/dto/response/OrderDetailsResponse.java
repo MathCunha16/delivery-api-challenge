@@ -1,11 +1,9 @@
 package com.cocobambu.delivery.dto.response;
 
 import com.cocobambu.delivery.enums.OrderStatus;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.math.BigDecimal;
-import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -27,8 +25,7 @@ public record OrderDetailsResponse(
         List<OrderItemsResponse> items,
 
         @JsonProperty("created_at")
-        @JsonFormat(shape = JsonFormat.Shape.NUMBER)
-        OffsetDateTime createdAt,
+        Long createdAt,
 
         List<OrderStatusResponse> statuses,
 
