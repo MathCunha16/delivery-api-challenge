@@ -9,7 +9,7 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface PaymentMapper {
 
-    @Mapping(source = "paymentMethod", target = "origin")
+    @Mapping(source = "paymentMethod", target = "paymentMethod")
     PaymentResponse toPaymentResponse(Payment payment);
 
     @Mapping(target = "id", ignore = true)
@@ -19,7 +19,7 @@ public interface PaymentMapper {
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "order", ignore = true)
-    @Mapping(source = "origin", target = "paymentMethod")
+    @Mapping(source = "paymentMethod", target = "paymentMethod")
     @Mapping(target = "prepaid", source = "prepaid")
     Payment toPaymentEntityFromResponse(PaymentResponse dto); // <-- para o seeder
 }

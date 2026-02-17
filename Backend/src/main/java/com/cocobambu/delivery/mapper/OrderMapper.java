@@ -48,7 +48,7 @@ public abstract class OrderMapper {
     @Mapping(target = "history", ignore = true)
     @Mapping(target = "store", ignore = true)
     @Mapping(target = "customerName", source = "customer.name")
-    @Mapping(target = "customerPhone", source = "customer.phone")
+    @Mapping(target = "customerPhone", source = "customer.temporaryPhone")
     public abstract Order toEntity(CreateOrderRequest request);
 
     @Mapping(target = "id", source = "orderId")
@@ -69,6 +69,11 @@ public abstract class OrderMapper {
     protected OffsetDateTime mapMillis(Long timestamp) {
         if (timestamp == null) return null;
         return OffsetDateTime.ofInstant(Instant.ofEpochMilli(timestamp), ZoneOffset.UTC);
+    }
+
+    protected Long mapOffsetDateTimeToMillis(OffsetDateTime date) {
+        if (date == null) return null;
+        return date.toInstant().toEpochMilli();
     }
 
     @AfterMapping
