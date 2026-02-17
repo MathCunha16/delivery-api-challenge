@@ -61,11 +61,10 @@ public abstract class OrderMapper {
     @Mapping(target = "items", source = "items")
     @Mapping(target = "payments", source = "payments")
     @Mapping(target = "updatedAt", ignore = true)
-    @Mapping(target = "createdAt", source = "createdAt", qualifiedByName = "millisToOffsetDateTime")
+    @Mapping(target = "createdAt", source = "createdAt", qualifiedByName = "orderMillisToDate")
     public abstract Order toEntityFromResponse(OrderDetailsResponse dto); // <-- para o seder
 
-    // conversor de Data (Millis -> OffsetDateTime)
-    @Named("millisToOffsetDateTime")
+    // conversor de Data (Millis -> OffsetDateTime)    @Named("orderMillisToDate")
     protected OffsetDateTime mapMillis(Long timestamp) {
         if (timestamp == null) return null;
         return OffsetDateTime.ofInstant(Instant.ofEpochMilli(timestamp), ZoneOffset.UTC);
