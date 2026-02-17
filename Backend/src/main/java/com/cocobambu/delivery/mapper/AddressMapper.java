@@ -9,20 +9,22 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface AddressMapper {
 
-    @Mapping(source = "coordinateId", target = "coordinates.cordinateId")
+    @Mapping(source = "coordinateId", target = "coordinates.coordinateId")
     @Mapping(source = "latitude", target = "coordinates.latitude")
     @Mapping(source = "longitude", target = "coordinates.longitude")
     DeliveryAddressResponse toAddressResponse(DeliveryAddress address);
 
     @Mapping(target = "orderId", ignore = true)
     @Mapping(target = "order", ignore = true)
-    @Mapping(target = "coordinateId", ignore = true)
+    @Mapping(source = "coordinates.coordinateId", target = "coordinateId")
+    @Mapping(source = "coordinates.latitude", target = "latitude")
+    @Mapping(source = "coordinates.longitude", target = "longitude")
     DeliveryAddress toAddressEntity(CreateAddressRequest request);
 
     @Mapping(target = "orderId", ignore = true)
     @Mapping(target = "order", ignore = true)
-    @Mapping(target = "coordinateId", source = "coordinates.cordinateId")
+    @Mapping(target = "coordinateId", source = "coordinates.coordinateId")
     @Mapping(target = "latitude", source = "coordinates.latitude")
     @Mapping(target = "longitude", source = "coordinates.longitude")
-    DeliveryAddress toAddressEntityFromResponse(DeliveryAddressResponse dto); // utilizado no seeder
+    DeliveryAddress toAddressEntityFromResponse(DeliveryAddressResponse dto); // <-- para o seeder
 }

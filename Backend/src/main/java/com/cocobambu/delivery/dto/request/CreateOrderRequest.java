@@ -1,5 +1,6 @@
 package com.cocobambu.delivery.dto.request;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -10,6 +11,7 @@ import java.util.UUID;
 public record CreateOrderRequest(
 
         @NotNull(message = "Store id is required")
+        @JsonProperty("store_id")
         UUID storeId,
 
         @Valid
@@ -26,6 +28,7 @@ public record CreateOrderRequest(
 
         @Valid
         @NotNull(message = "Delivery address is required")
+        @JsonProperty("delivery_address")
         CreateAddressRequest deliveryAddress
 ) {
 }
