@@ -42,13 +42,13 @@ public abstract class OrderMapper {
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "totalPrice", ignore = true)
-    @Mapping(target = "lastStatus", constant = "RECEIVED")
-    @Mapping(target = "createdAt", expression = "java(java.time.OffsetDateTime.now())")
+    @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updatedAt", ignore = true)
-    @Mapping(target = "history", ignore = true)
     @Mapping(target = "store", ignore = true)
     @Mapping(target = "customerName", source = "customer.name")
     @Mapping(target = "customerPhone", source = "customer.temporaryPhone")
+    @Mapping(target = "lastStatus", ignore = true)
+    @Mapping(target = "history", ignore = true)
     public abstract Order toEntity(CreateOrderRequest request);
 
     @Mapping(target = "id", source = "orderId")

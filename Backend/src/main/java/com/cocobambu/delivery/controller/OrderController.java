@@ -2,6 +2,7 @@ package com.cocobambu.delivery.controller;
 
 import com.cocobambu.delivery.controller.api.OrderApi;
 import com.cocobambu.delivery.dto.request.CreateOrderRequest;
+import com.cocobambu.delivery.dto.request.UpdateOrderStatusRequest;
 import com.cocobambu.delivery.dto.response.OrderWrapperResponse;
 import com.cocobambu.delivery.service.OrderService;
 import com.cocobambu.delivery.util.UriLocationBuilderHelper;
@@ -56,5 +57,14 @@ public class OrderController implements OrderApi {
             @RequestParam(defaultValue = "10") int size
     ){
         return ResponseEntity.ok(service.getOrdersByStore(storeId, page, size));
+    }
+
+    @PatchMapping("/{id}/status")
+    @Override
+    public ResponseEntity<OrderWrapperResponse> updateOrderStatus(
+            @PathVariable UUID id,
+            @RequestBody @Valid UpdateOrderStatusRequest request
+    ){
+        return ResponseEntity.ok(service.updateOrderStatus(id, request));
     }
 }

@@ -40,16 +40,8 @@ public class CreateOrderUseCase {
         Order order = mapper.toEntity(request);
         order.setId(UUID.randomUUID());
         order.setStore(store);
-        order.setLastStatus(OrderStatus.RECEIVED); // Status inicial sempre é RECEIVED
         order.setCreatedAt(now);
-
-        OrderStatusHistory history = new OrderStatusHistory();
-        history.setStatus(OrderStatus.RECEIVED);
-        history.setCreatedAt(now);
-        history.setOrder(order);
-        history.setOrigin(StatusOrigin.STORE);
-        order.getHistory().add(history); // adiciona na lista pra salvar em cascata
-
+        order.changeStatusTo(OrderStatus.RECEIVED, StatusOrigin.STORE, now); // ja adiciona no histórico automaticamente
         calculateOrderTotal(order);
         validateOrderTotals(order);
 
