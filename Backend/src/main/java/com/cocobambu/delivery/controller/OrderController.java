@@ -2,6 +2,7 @@ package com.cocobambu.delivery.controller;
 
 import com.cocobambu.delivery.controller.api.OrderApi;
 import com.cocobambu.delivery.dto.request.CreateOrderRequest;
+import com.cocobambu.delivery.dto.request.UpdateOrderRequest;
 import com.cocobambu.delivery.dto.request.UpdateOrderStatusRequest;
 import com.cocobambu.delivery.dto.response.OrderWrapperResponse;
 import com.cocobambu.delivery.service.OrderService;
@@ -66,5 +67,21 @@ public class OrderController implements OrderApi {
             @RequestBody @Valid UpdateOrderStatusRequest request
     ){
         return ResponseEntity.ok(service.updateOrderStatus(id, request));
+    }
+
+    @DeleteMapping("/{id}")
+    @Override
+    public ResponseEntity<Void> deleteOrder(@PathVariable UUID id){
+        service.deleteOrder(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("{id}")
+    @Override
+    public ResponseEntity<OrderWrapperResponse> updateOrder(
+            @PathVariable UUID id,
+            @RequestBody @Valid UpdateOrderRequest request
+    ){
+        return ResponseEntity.ok(service.updateOrder(id, request));
     }
 }

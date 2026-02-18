@@ -1,9 +1,12 @@
 package com.cocobambu.delivery.mapper;
 
+import com.cocobambu.delivery.dto.request.CreateAddressRequest;
 import com.cocobambu.delivery.dto.request.CreateOrderRequest;
+import com.cocobambu.delivery.dto.request.UpdateOrderRequest;
 import com.cocobambu.delivery.dto.response.CustomerResponse;
 import com.cocobambu.delivery.dto.response.OrderDetailsResponse;
 import com.cocobambu.delivery.dto.response.OrderWrapperResponse;
+import com.cocobambu.delivery.entity.DeliveryAddress;
 import com.cocobambu.delivery.entity.Order;
 import org.mapstruct.*;
 
@@ -50,6 +53,25 @@ public abstract class OrderMapper {
     @Mapping(target = "lastStatus", ignore = true)
     @Mapping(target = "history", ignore = true)
     public abstract Order toEntity(CreateOrderRequest request);
+
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "totalPrice", ignore = true)
+    @Mapping(target = "items", ignore = true)
+    @Mapping(target = "lastStatus", ignore = true)
+    @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "updatedAt", ignore = true)
+    @Mapping(target = "store", ignore = true)
+    @Mapping(target = "payments", ignore = true)
+    @Mapping(target = "history", ignore = true)
+    @Mapping(target = "deliveryAddress", ignore = true)
+    public abstract void updateEntityFromDto(UpdateOrderRequest dto, @MappingTarget Order entity);
+
+    @Mapping(target = "orderId", ignore = true)
+    @Mapping(target = "order", ignore = true)
+    @Mapping(target = "coordinateId", source = "coordinates.coordinateId")
+    @Mapping(target = "latitude", source = "coordinates.latitude")
+    @Mapping(target = "longitude", source = "coordinates.longitude")
+    public abstract void updateAddressFromDto(CreateAddressRequest dto, @MappingTarget DeliveryAddress entity);
 
     @Mapping(target = "id", source = "orderId")
     @Mapping(target = "lastStatus", source = "lastStatusName")
