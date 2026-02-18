@@ -1,6 +1,7 @@
 package com.cocobambu.delivery.controller.api;
 
 import com.cocobambu.delivery.dto.request.CreateOrderRequest;
+import com.cocobambu.delivery.dto.request.UpdateOrderRequest;
 import com.cocobambu.delivery.dto.request.UpdateOrderStatusRequest;
 import com.cocobambu.delivery.dto.response.OrderWrapperResponse;
 import io.swagger.v3.oas.annotations.Operation;
@@ -81,5 +82,36 @@ public interface OrderApi {
     ResponseEntity<OrderWrapperResponse> updateOrderStatus(
             @Parameter(description = "ID do pedido") UUID id,
             @Parameter(description = "Novo status") UpdateOrderStatusRequest request
+    );
+
+    @Operation(
+            summary = "Exclui um pedido",
+            description = "Remove permanentemente um pedido do sistema. " +
+                    "**Regra de Negócio:** Apenas pedidos finalizados (status **CANCELED** ou **DELIVERED**) podem ser excluídos. " +
+                    "Pedidos em andamento (RECEIVED, CONFIRMED, DISPATCHED) gerarão erro."
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "Pedido excluído com sucesso (sem conteúdo)", content = @Content),
+            @ApiResponse(responseCode = "400", description = "Erro: Tentativa de excluir pedido em andamento", content = @Content),
+            @ApiResponse(responseCode = "404", description = "Pedido não encontrado", content = @Content),
+            @ApiResponse(responseCode = "500", description = "Erro interno no servidor", content = @Content)
+    })
+    ResponseEntity<Void> deleteOrder(
+            @Parameter(description = "UUID do pedido a ser excluído", required = true) UUID id
+    );
+
+    @Operation(
+            summary = "Atualiza dados do pedido",
+            description = "Atualiza informações cadastrais do pedido (cliente e endereço). " +
+                    "**Regra de Negócio:** Só é permitido alterar pedidos que ainda não saíram para entrega (status **RECEIVED** ou **CONFIRMED**)."
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Pedido atualizado com sucesso"),
+            @ApiResponse(responseCode = "400", description = "Erro de validação ou status do pedido não permite alteração", content = @Content),
+            @ApiResponse(responseCode = "404", description = "Pedido não encontrado", content = @Content)
+    })
+    ResponseEntity<OrderWrapperResponse> updateOrder(
+            @Parameter(description = "UUID do pedido") UUID id,
+            @Parameter(description = "Novos dados do pedido") UpdateOrderRequest request
     );
 }
