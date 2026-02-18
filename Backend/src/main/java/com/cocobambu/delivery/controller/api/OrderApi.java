@@ -1,6 +1,7 @@
 package com.cocobambu.delivery.controller.api;
 
 import com.cocobambu.delivery.dto.request.CreateOrderRequest;
+import com.cocobambu.delivery.dto.request.UpdateOrderStatusRequest;
 import com.cocobambu.delivery.dto.response.OrderWrapperResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -69,5 +70,16 @@ public interface OrderApi {
             @Parameter(description = "UUID da loja") UUID storeId,
             @Parameter(description = "Página") int page,
             @Parameter(description = "Tamanho") int size
+    );
+
+    @Operation(summary = "Atualiza status do pedido", description = "Avança o status do pedido seguindo as regras da máquina de estados.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Status atualizado com sucesso"),
+            @ApiResponse(responseCode = "400", description = "Transição de status inválida", content = @Content),
+            @ApiResponse(responseCode = "404", description = "Pedido não encontrado", content = @Content)
+    })
+    ResponseEntity<OrderWrapperResponse> updateOrderStatus(
+            @Parameter(description = "ID do pedido") UUID id,
+            @Parameter(description = "Novo status") UpdateOrderStatusRequest request
     );
 }

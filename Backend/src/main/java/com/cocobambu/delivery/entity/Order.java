@@ -1,6 +1,8 @@
 package com.cocobambu.delivery.entity;
 
 import com.cocobambu.delivery.enums.OrderStatus;
+import com.cocobambu.delivery.enums.StatusOrigin;
+import com.cocobambu.delivery.exception.BusinessException;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
@@ -52,7 +54,8 @@ public class Order {
     private List<Payment> payments = new ArrayList<>();
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
-    private List<OrderStatusHistory> history = new ArrayList<>();
+    @OrderBy("createdAt ASC")
+    private List<OrderStatusHistory> history = new ArrayList<>(); // evita NPE
 
     public Order() {
         // Empty Constructor
@@ -101,7 +104,7 @@ public class Order {
         return lastStatus;
     }
 
-    public void setLastStatus(OrderStatus lastStatus) {
+    public void setLastStatus(OrderStatus lastStatus) { // não dá pra deixar protected por causa do mapper do seeder
         this.lastStatus = lastStatus;
     }
 
@@ -160,6 +163,28 @@ public class Order {
         return history;
     }
 
+    // ------ Controle de estado -----
+    public void changeStatusTo(OrderStatus newStatus, StatusOrigin origin, OffsetDateTime when) {
+        if (newStatus == null) throw new IllegalArgumentException("newStatus is null");
+        if (origin == null) throw new IllegalArgumentException("origin is null");
+        if (when == null) throw new IllegalArgumentException("when is null");
+
+        if (this.lastStatus == newStatus) return;
+
+        if (this.lastStatus != null && !this.lastStatus.canTransitionTo(newStatus)) {
+            throw new BusinessException("Invalid status transition: " + this.lastStatus + " -> " + newStatus);
+        }
+
+        this.lastStatus = newStatus;
+
+        OrderStatusHistory orderStatusHistory = new OrderStatusHistory();
+        orderStatusHistory.setOrder(this);
+        orderStatusHistory.setStatus(newStatus);
+        orderStatusHistory.setOrigin(origin);
+        orderStatusHistory.setCreatedAt(when);
+
+        this.history.add(orderStatusHistory);
+    }
 
     @Override
     public boolean equals(Object o) {
