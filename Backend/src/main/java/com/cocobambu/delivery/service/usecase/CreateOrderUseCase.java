@@ -5,10 +5,11 @@ import com.cocobambu.delivery.dto.response.OrderWrapperResponse;
 import com.cocobambu.delivery.entity.*;
 import com.cocobambu.delivery.enums.OrderStatus;
 import com.cocobambu.delivery.enums.StatusOrigin;
+import com.cocobambu.delivery.exception.BusinessException;
+import com.cocobambu.delivery.exception.ResourceNotFoundException;
 import com.cocobambu.delivery.mapper.OrderMapper;
 import com.cocobambu.delivery.repository.OrderRepository;
 import com.cocobambu.delivery.repository.StoreRepository;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,7 +33,7 @@ public class CreateOrderUseCase {
     @Transactional
     public OrderWrapperResponse execute(CreateOrderRequest request) {
         Store store = storeRepository.findById(request.storeId())
-                .orElseThrow(() -> new EntityNotFoundException("Store not found with id:" + request.storeId()));
+                .orElseThrow(() -> new ResourceNotFoundException("Store not found with id:" + request.storeId()));
 
         OffsetDateTime now = OffsetDateTime.now();
 
@@ -86,7 +87,7 @@ public class CreateOrderUseCase {
 
     private void validateOrderTotals(Order order) {
         if (order.getPayments() == null || order.getPayments().isEmpty()) {
-            throw new IllegalArgumentException("Order must have at least one payment");
+            throw new BusinessException("Order must have at least one payment");
         }
 
         BigDecimal totalPayments = order.getPayments().stream()
@@ -94,7 +95,7 @@ public class CreateOrderUseCase {
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
 
         if (order.getTotalPrice().compareTo(totalPayments) != 0) {
-            throw new IllegalArgumentException(
+            throw new BusinessException(
                     String.format("Value mismatch: Order Total (%s) differs from Total Paid (%s)",
                             order.getTotalPrice(), totalPayments));
         }
