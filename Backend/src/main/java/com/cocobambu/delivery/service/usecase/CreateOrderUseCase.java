@@ -4,6 +4,7 @@ import com.cocobambu.delivery.dto.request.CreateOrderRequest;
 import com.cocobambu.delivery.dto.response.OrderWrapperResponse;
 import com.cocobambu.delivery.entity.*;
 import com.cocobambu.delivery.enums.OrderStatus;
+import com.cocobambu.delivery.enums.PaymentMethod;
 import com.cocobambu.delivery.enums.StatusOrigin;
 import com.cocobambu.delivery.exception.BusinessException;
 import com.cocobambu.delivery.exception.ResourceNotFoundException;
@@ -44,6 +45,7 @@ public class CreateOrderUseCase {
         order.changeStatusTo(OrderStatus.RECEIVED, StatusOrigin.STORE, now); // ja adiciona no histórico automaticamente
         calculateOrderTotal(order);
         validateOrderTotals(order);
+        validatePaymentMethods(order);
 
         Order savedOrder = orderRepository.save(order);
 
@@ -90,6 +92,23 @@ public class CreateOrderUseCase {
             throw new BusinessException(
                     String.format("Value mismatch: Order Total (%s) differs from Total Paid (%s)",
                             order.getTotalPrice(), totalPayments));
+        }
+    }
+
+    private void validatePaymentMethods(Order order) {
+        for (Payment payment : order.getPayments()) {
+            PaymentMethod method = payment.getPaymentMethod();
+            boolean isPrepaid = payment.getPrepaid();
+
+            if (isPrepaid && !method.acceptsOnline()) {
+                throw new BusinessException(
+                        String.format("Payment method %s is not accepted online", method));
+            }
+
+            if (!isPrepaid && !method.acceptsPresential()) {
+                throw new BusinessException(
+                        String.format("The payment method %s is not accepted upon delivery.", method));
+            }
         }
     }
 }

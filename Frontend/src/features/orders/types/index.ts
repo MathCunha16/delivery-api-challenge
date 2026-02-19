@@ -21,7 +21,6 @@ export interface Address {
     state: string;
     zip_code?: string; // Used in POST/PUT
     postal_code?: string; // Used in GET responses
-    complement?: string;
     reference?: string;
     coordinates?: Coordinates;
 }

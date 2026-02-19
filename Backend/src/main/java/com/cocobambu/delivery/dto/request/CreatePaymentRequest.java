@@ -17,7 +17,7 @@ public record CreatePaymentRequest(
         @Positive(message = "Value must be positive")
         BigDecimal value,
 
-        @JsonProperty("is_prepaid")
+        @JsonProperty("prepaid")
         Boolean isPrepaid
 ) {
 }

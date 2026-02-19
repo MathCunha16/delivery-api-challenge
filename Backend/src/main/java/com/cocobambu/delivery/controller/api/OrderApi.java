@@ -27,7 +27,7 @@ public interface OrderApi {
     )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Pedido criado com sucesso", content = @Content),
-            @ApiResponse(responseCode = "400", description = "Erro de validação (campos inválidos) ou erro de mismatch de valor pago", content = @Content),
+            @ApiResponse(responseCode = "400", description = "Erro de validação (campos inválidos), erro de mismatch de valor pago, ou metódo de pagamento invalído", content = @Content),
             @ApiResponse(responseCode = "404", description = "Erro, não foi possível encontrar loja com o id fornecido", content = @Content),
             @ApiResponse(responseCode = "500", description = "Erro interno no servidor", content = @Content)
     })

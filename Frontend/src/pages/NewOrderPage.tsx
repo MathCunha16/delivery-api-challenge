@@ -25,7 +25,6 @@ interface NewOrderForm {
         city: string;
         state: string;
         reference: string;
-        complement: string;
     };
     cart: CartItem[];
     payment: {
@@ -56,7 +55,7 @@ const NewOrderPage = () => {
         customer: { name: '', phone: '' },
         address: {
             zipCode: '', street: '', number: '', neighborhood: '',
-            city: 'Goiânia', state: 'GO', reference: '', complement: ''
+            city: 'Goiânia', state: 'GO', reference: ''
         },
         cart: [],
         payment: { method: 'CREDIT_CARD', prepaid: false }
@@ -127,6 +126,9 @@ const NewOrderPage = () => {
 
             const total = Number(rawTotal.toFixed(2));
 
+            const isPrepaid = formData.payment.method === 'PIX';
+            const prepaidString = isPrepaid ? 'true' : 'false';
+
             const payload = {
                 store_id: storeId,
                 total_price: total,
@@ -142,7 +144,6 @@ const NewOrderPage = () => {
                     state: formData.address.state,
                     country: 'BR',
                     zip_code: formData.address.zipCode,
-                    complement: formData.address.complement,
                     reference: formData.address.reference,
                     coordinates: {
                         latitude: -16.686891, // Mocked
@@ -161,6 +162,7 @@ const NewOrderPage = () => {
                 payments: [
                     {
                         payment_method: formData.payment.method,
+                        prepaid: prepaidString,
                         value: total
                     }
                 ]
@@ -315,16 +317,6 @@ const NewOrderPage = () => {
                                     value={formData.address.neighborhood}
                                     onChange={e => updateFormData('address', { neighborhood: e.target.value })}
                                     className="w-full bg-zinc-900 border border-zinc-700 rounded-lg p-3 text-white focus:ring-2 focus:ring-orange-500 outline-none"
-                                />
-                            </div>
-                            <div className="col-span-2">
-                                <label className="block text-sm font-medium text-zinc-400 mb-1">Complemento</label>
-                                <input
-                                    type="text"
-                                    value={formData.address.complement}
-                                    onChange={e => updateFormData('address', { complement: e.target.value })}
-                                    className="w-full bg-zinc-900 border border-zinc-700 rounded-lg p-3 text-white focus:ring-2 focus:ring-orange-500 outline-none"
-                                    placeholder="Ex: Apto 101"
                                 />
                             </div>
                             <div className="col-span-2">
