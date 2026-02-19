@@ -1,5 +1,6 @@
 import { createBrowserRouter } from 'react-router-dom';
 import SelectionPage from '../pages/SelectionPage';
+import DashboardPage from '../pages/DashboardPage';
 
 export const router = createBrowserRouter([
     {
@@ -8,6 +9,6 @@ export const router = createBrowserRouter([
     },
     {
         path: '/dashboard',
-        element: <div>Dashboard Placeholder</div>,
+        element: <DashboardPage />,
     },
 ]);
