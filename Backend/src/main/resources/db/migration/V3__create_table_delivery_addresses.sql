@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS delivery_addresses (
                                                   city VARCHAR(100) NOT NULL,
                                                   state VARCHAR(50) NOT NULL,
                                                   postal_code VARCHAR(20) NOT NULL,
-                                                  country CHAR(2) DEFAULT 'BR',
+                                                  country VARCHAR(2) DEFAULT 'BR',
                                                   reference TEXT,
                                                   FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE CASCADE
 );
