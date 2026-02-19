@@ -6,5 +6,13 @@ public enum PaymentMethod {
     PIX,
     CASH,
     VR,
-    VA
+    VA;
+
+    public boolean acceptsOnline() {
+        return this != CASH;
+    }
+
+    public boolean acceptsPresential() {
+        return this != PIX;
+    }
 }
