@@ -21,7 +21,6 @@ export const EditOrderModal = ({ order, isOpen, onClose, onUpdate }: EditOrderMo
         city: order.delivery_address.city,
         state: order.delivery_address.state,
         zip_code: order.delivery_address.zip_code || order.delivery_address.postal_code || '',
-        complement: order.delivery_address.complement || '',
         reference: order.delivery_address.reference || ''
     });
 
@@ -37,7 +36,6 @@ export const EditOrderModal = ({ order, isOpen, onClose, onUpdate }: EditOrderMo
                 city: order.delivery_address.city,
                 state: order.delivery_address.state,
                 zip_code: order.delivery_address.zip_code || order.delivery_address.postal_code || '',
-                complement: order.delivery_address.complement || '',
                 reference: order.delivery_address.reference || ''
             });
         }
@@ -57,7 +55,6 @@ export const EditOrderModal = ({ order, isOpen, onClose, onUpdate }: EditOrderMo
                     city: formData.city,
                     state: formData.state,
                     zip_code: formData.zip_code,
-                    complement: formData.complement,
                     reference: formData.reference,
                     country: 'BR',
                     coordinates: order.delivery_address.coordinates // Keep existing coordinates
@@ -161,15 +158,6 @@ export const EditOrderModal = ({ order, isOpen, onClose, onUpdate }: EditOrderMo
                                     required
                                     value={formData.neighborhood}
                                     onChange={e => setFormData({ ...formData, neighborhood: e.target.value })}
-                                    className="w-full bg-zinc-950 border border-zinc-800 rounded-lg p-2.5 text-white focus:ring-2 focus:ring-emerald-500 outline-none transition-all"
-                                />
-                            </div>
-                            <div>
-                                <label className="block text-sm font-medium text-zinc-400 mb-1">Complemento</label>
-                                <input
-                                    type="text"
-                                    value={formData.complement}
-                                    onChange={e => setFormData({ ...formData, complement: e.target.value })}
                                     className="w-full bg-zinc-950 border border-zinc-800 rounded-lg p-2.5 text-white focus:ring-2 focus:ring-emerald-500 outline-none transition-all"
                                 />
                             </div>

@@ -66,9 +66,6 @@ export const OrderCustomerCard = ({ order, onUpdate }: OrderCustomerCardProps) =
                     <p className="font-medium text-zinc-100">
                         {order.delivery_address.street_name}, {order.delivery_address.street_number}
                     </p>
-                    {order.delivery_address.complement && (
-                        <p className="text-zinc-400">Comp: {order.delivery_address.complement}</p>
-                    )}
                     <p>{order.delivery_address.neighborhood}</p>
                     <p>{order.delivery_address.city} - {order.delivery_address.state}</p>
                     <p className="text-zinc-500 text-xs mt-2 pt-2 border-t border-zinc-800/50">

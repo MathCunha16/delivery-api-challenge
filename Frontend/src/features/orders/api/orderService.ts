@@ -31,7 +31,6 @@ export const updateOrder = async (orderId: string, payload: {
     city: string;
     state: string;
     zip_code: string;
-    complement?: string;
     reference?: string;
     country: string;
     coordinates?: {
