@@ -1,6 +1,7 @@
 import { createBrowserRouter } from 'react-router-dom';
 import SelectionPage from '../pages/SelectionPage';
 import DashboardPage from '../pages/DashboardPage';
+import OrderDetailsPage from '../pages/OrderDetailsPage';
 
 export const router = createBrowserRouter([
     {
@@ -11,4 +12,8 @@ export const router = createBrowserRouter([
         path: '/dashboard',
         element: <DashboardPage />,
     },
+    {
+        path: '/order/:id',
+        element: <OrderDetailsPage />,
+    }
 ]);
