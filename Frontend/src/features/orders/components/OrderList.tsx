@@ -4,11 +4,12 @@ import { getOrdersByStore } from '../api/orderService';
 import type { Order } from '../types';
 import { StatusBadge } from './StatusBadge';
 import { RefreshCw, Search, ChevronLeft, ChevronRight } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import clsx from 'clsx';
 
 export const OrderList = () => {
     const { currentStore } = useStore();
+    const navigate = useNavigate();
     const [orders, setOrders] = useState<Order[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
@@ -134,6 +135,7 @@ export const OrderList = () => {
                                 {orders.map((order) => (
                                     <tr
                                         key={order.order_id}
+                                        onClick={() => navigate(`/order/${order.order_id}`)}
                                         className="group hover:bg-zinc-800/30 transition-all duration-200 cursor-pointer"
                                     >
                                         <td className="px-6 py-4 font-mono text-xs text-zinc-500 group-hover:text-zinc-400">
@@ -155,12 +157,11 @@ export const OrderList = () => {
                                             </div>
                                         </td>
                                         <td className="px-6 py-4 text-right">
-                                            <Link
-                                                to={`/order/${order.order_id}`}
-                                                className="text-emerald-500 hover:text-emerald-400 font-medium text-xs opacity-0 group-hover:opacity-100 transition-all transform translate-x-2 group-hover:translate-x-0"
+                                            <span
+                                                className="text-emerald-500 group-hover:text-emerald-400 font-medium text-xs opacity-0 group-hover:opacity-100 transition-all transform translate-x-2 group-hover:translate-x-0 inline-block"
                                             >
                                                 Detalhes
-                                            </Link>
+                                            </span>
                                         </td>
                                     </tr>
                                 ))}
