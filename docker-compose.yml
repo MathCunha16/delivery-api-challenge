@@ -1,4 +1,5 @@
 services:
+    # -- Postgres --
     postgres:
         image: postgres:17-alpine
         container_name: delivery-db
@@ -12,7 +13,46 @@ services:
             - "5432:5432"
         volumes:
             - pg-cocobambu-delivery:/var/lib/postgresql/data
+        networks:
+            - delivery_network
+        healthcheck:
+            test: [ "CMD-SHELL", "pg_isready -U ${DB_USERNAME}" ]
+            interval: 10s
+            timeout: 5s
+            retries: 5
+
+    # -- Backend API --
+    backend-api:
+        container_name: api_delivery
+        build:
+            context: ./Backend
+        env_file:
+            - ./.env
+        environment:
+            - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/${DB_NAME}
+            - SPRING_DATASOURCE_USERNAME=${DB_USERNAME}
+            - SPRING_DATASOURCE_PASSWORD=${DB_PASSWORD}
+        ports:
+            - "8080:8080"
+        depends_on:
+            postgres:
+                condition: service_healthy
+        networks:
+            - delivery_network
+    frontend:
+        build: ./Frontend
+        container_name: frontend
+        ports:
+            - "5173:80"
+        depends_on:
+            - backend-api
+        networks:
+            - delivery_network
 
 volumes:
     pg-cocobambu-delivery:
         driver: local
+
+networks:
+    delivery_network:
+        driver: bridge
