@@ -1,0 +1,369 @@
+type: collection.insomnia.rest/5.0
+schema_version: "5.1"
+name: Delivery-API
+meta:
+  id: wrk_e676d674506c4101beafb0b650fd6e3a
+  created: 1771307766056
+  modified: 1771307853132
+  description: ""
+collection:
+  - name: Order
+    meta:
+      id: fld_647a4de1c02e4dadb1a87af2a6d04085
+      created: 1771307830984
+      modified: 1771307830984
+      sortKey: -1771307830984
+      description: ""
+    children:
+      - url: "{{ _.base_url }}{{ _.version }}/orders"
+        name: Create
+        meta:
+          id: req_01a10e053f614163ba9524ea18df5eae
+          created: 1771307874767
+          modified: 1771523577956
+          isPrivate: false
+          description: ""
+          sortKey: -1771307874867
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"store_id": "f052054c-e0a0-4768-ab55-7cb7ead57371",
+            	"total_price": 139.90,
+            	"customer": {
+            		"name": "{% faker 'randomFullName' %}",
+            		"temporary_phone": "+5562999999999"
+            	},
+            	"delivery_address": {
+            		"reference": "proximo ao {% faker 'randomCompanyName' %}",
+            		"street_name": "{% faker 'randomStreetName' %}",
+            		"street_number": "{% faker 'randomInt' %}",
+            		"neighborhood": "{% faker 'randomStreetAddress' %}",
+            		"city": "Goiânia",
+            		"state": "GO",
+            		"zip_code": "74230-100",
+            		"country": "BR",
+            		"complement": "{% faker 'randomLocale' %}",
+            		"coordinates": {
+            			"latitude": {% faker 'randomLatitude' %},
+            			"longitude": {% faker 'randomLongitude' %},
+            			"coordinate_id": "{% faker 'randomInt' %}"
+            		}
+            	},
+            	"items": [
+            		{
+            			"code": "123456",
+            			"name": "Camarão Internacional",
+            			"quantity": 1,
+            			"unit_price": 129.90,
+            			"observations": "Tirar salada",
+            			"condiments": [
+            				{
+            					"name": "Queijo Extra",
+            					"price": 5.00
+            				},
+            				{
+            					"name": "Arroz Extra",
+            					"price": 5.00
+            				}
+            			]
+            		}
+            	],
+            	"payments": [
+            		{
+            			"payment_method": "DEBIT_CARD",
+            			"prepaid":"false", 
+            			"value": 139.90
+            		}
+            	]
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/12.3.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.base_url }}{{ _.version }}/orders"
+        name: Get All Orders
+        meta:
+          id: req_6731bcb97c7640158136f38d8178750e
+          created: 1771377690869
+          modified: 1771582026954
+          isPrivate: false
+          description: ""
+          sortKey: -1771377690869
+        method: GET
+        parameters:
+          - name: page
+            value: "0"
+            description: ""
+            disabled: false
+          - name: size
+            value: "10"
+            description: ""
+            disabled: false
+        headers:
+          - name: User-Agent
+            value: insomnia/12.3.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.base_url }}{{ _.version
+          }}/orders/4fe12e3d-24cc-447e-82d8-3b076febcc51"
+        name: Get Order By Id
+        meta:
+          id: req_d2756cfecae64b73ad3f5b333dc4c8cb
+          created: 1771378651265
+          modified: 1771581935963
+          isPrivate: false
+          description: ""
+          sortKey: -1771342782868
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/12.3.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.base_url }}{{ _.version
+          }}/orders/store/98765432-abcd-ef00-1234-567890abcdef"
+        name: Get Orders By Store
+        meta:
+          id: req_c0f5e6087d434d9aab0c809c633acbd0
+          created: 1771379470256
+          modified: 1771581630854
+          isPrivate: false
+          description: ""
+          sortKey: -1771360236868.5
+        method: GET
+        parameters:
+          - name: page
+            value: "0"
+            description: ""
+            disabled: false
+          - name: size
+            value: "10"
+            description: ""
+            disabled: false
+        headers:
+          - name: User-Agent
+            value: insomnia/12.3.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.base_url }}{{ _.version
+          }}/orders/d4e5f6a7-b8c9-5011-d222-e4f504123456/status"
+        name: Update Order Status
+        meta:
+          id: req_b2bb3fc7d58d4f049169490f403b2736
+          created: 1771388280524
+          modified: 1771581992435
+          isPrivate: false
+          description: ""
+          sortKey: -1771388280524
+        method: PATCH
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"status": "CANCELED"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/12.3.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.base_url }}{{ _.version
+          }}/orders/d4e5f6a7-b8c9-5011-d222-e4f504123456"
+        name: Delete Order
+        meta:
+          id: req_ed2f22d298564d959f750afc72835f86
+          created: 1771437727925
+          modified: 1771582084687
+          isPrivate: false
+          description: ""
+          sortKey: -1771437727925
+        method: DELETE
+        headers:
+          - name: User-Agent
+            value: insomnia/12.3.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.base_url }}{{ _.version
+          }}/orders/d4e5f6a7-b8c9-5011-d222-e4f504123456"
+        name: Update Order
+        meta:
+          id: req_9dcdaea4841349ff8f37e637ac6553cb
+          created: 1771438842909
+          modified: 1771582075242
+          isPrivate: false
+          description: ""
+          sortKey: -1771413004224.5
+        method: PUT
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "customer_name": "Matheus Cunha (Editado)",
+              "temporary_phone": "+55 62 98888-7777",
+              "delivery_address": {
+            		"reference": "proximo a casa verde",
+            		"street_name": "Rua Canadá",
+            		"street_number": "777",
+            		"neighborhood": "Setor Bueno",
+            		"city": "Goiânia",
+            		"state": "GO",
+            		"zip_code": "74230-100",
+            		"country": "BR",
+            		"complement": "segunda casa",
+            		"coordinates": {
+            			"latitude": {% faker 'randomLatitude' %},
+            			"longitude": {% faker 'randomLongitude' %},
+            			"coordinate_id": {% faker 'randomInt' %}
+            		}
+              }
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/12.3.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+  - name: Store
+    meta:
+      id: fld_3e63a3acd1bc4349aec19626517c6709
+      created: 1771451531710
+      modified: 1771451531710
+      sortKey: -1771451531710
+      description: ""
+    children:
+      - url: "{{ _.base_url }}{{ _.version }}/stores"
+        name: Get All Stores
+        meta:
+          id: req_ffc06ce5e32247698f972cbe82d74e17
+          created: 1771451536367
+          modified: 1771452031478
+          isPrivate: false
+          description: ""
+          sortKey: -1771451536367
+        method: GET
+        parameters:
+          - name: page
+            value: "0"
+            description: ""
+            disabled: false
+          - name: size
+            value: "10"
+            description: ""
+            disabled: false
+        headers:
+          - name: User-Agent
+            value: insomnia/12.3.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.base_url }}{{ _.version
+          }}/stores/f052054c-e0a0-4768-ab55-7cb7ead57371"
+        name: Get Store By Id
+        meta:
+          id: req_c81ad0f598ea4724be8e54724cccbd36
+          created: 1771452021088
+          modified: 1771452187611
+          isPrivate: false
+          description: ""
+          sortKey: -1771444632146
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/12.3.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+cookieJar:
+  name: Default Jar
+  meta:
+    id: jar_90502d77b36475f2a819f033b02d8b11904e3ca5
+    created: 1771307766063
+    modified: 1771307766063
+environments:
+  name: Base Environment
+  meta:
+    id: env_90502d77b36475f2a819f033b02d8b11904e3ca5
+    created: 1771307766060
+    modified: 1771307948924
+    isPrivate: false
+  data:
+    base_url: localhost:8080
+    version: /api/v1
