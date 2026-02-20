@@ -2,6 +2,7 @@ plugins {
 	java
 	id("org.springframework.boot") version "4.0.2"
 	id("io.spring.dependency-management") version "1.1.7"
+	id("io.gatling.gradle") version "3.14.9.8"
 }
 
 val mapstructVersion = "1.5.5.Final" // MapStruct version

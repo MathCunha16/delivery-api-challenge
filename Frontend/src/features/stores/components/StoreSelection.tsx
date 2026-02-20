@@ -8,9 +8,12 @@ import { Store as StoreIcon, ChevronRight } from 'lucide-react';
 
 interface StoreSelectionProps {
     mode?: 'PARTNER' | 'SIMULATOR';
+    excludeStoreId?: string;
+    includeOnlyStoreId?: string;
+    customStyle?: 'PERFORMANCE';
 }
 
-export const StoreSelection = ({ mode = 'PARTNER' }: StoreSelectionProps) => {
+export const StoreSelection = ({ mode = 'PARTNER', excludeStoreId, includeOnlyStoreId, customStyle }: StoreSelectionProps) => {
     const [stores, setStores] = useState<Store[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
@@ -22,7 +25,18 @@ export const StoreSelection = ({ mode = 'PARTNER' }: StoreSelectionProps) => {
             try {
                 setLoading(true);
                 const data = await getStores(0, 100);
-                setStores(data.content);
+
+                let fetchedStores = data.content;
+
+                if (excludeStoreId) {
+                    fetchedStores = fetchedStores.filter(s => s.id !== excludeStoreId);
+                }
+
+                if (includeOnlyStoreId) {
+                    fetchedStores = fetchedStores.filter(s => s.id === includeOnlyStoreId);
+                }
+
+                setStores(fetchedStores);
             } catch (err) {
                 setError('Falha ao carregar lojas. Verifique sua conexão.');
                 console.error(err);
@@ -32,11 +46,11 @@ export const StoreSelection = ({ mode = 'PARTNER' }: StoreSelectionProps) => {
         };
 
         fetchStores();
-    }, []);
+    }, [excludeStoreId, includeOnlyStoreId]);
 
     const handleSelectStore = (store: Store) => {
         setStore(store);
-        if (mode === 'PARTNER') {
+        if (mode === 'PARTNER' || customStyle === 'PERFORMANCE') {
             navigate('/dashboard');
         } else {
             navigate(`/store/${store.id}/new-order`);
@@ -60,10 +74,22 @@ export const StoreSelection = ({ mode = 'PARTNER' }: StoreSelectionProps) => {
         );
     }
 
+    if (stores.length === 0) {
+        return (
+            <div className="p-4 rounded-lg bg-zinc-900 border border-zinc-800 text-zinc-400 text-center">
+                Nenhuma loja encontrada.
+            </div>
+        );
+    }
+
     const isPartner = mode === 'PARTNER';
+    const isPerformance = customStyle === 'PERFORMANCE';
 
     return (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-3xl">
+        <div className={clsx(
+            "grid gap-6 w-full max-w-3xl",
+            stores.length === 1 ? "grid-cols-1" : "grid-cols-1 md:grid-cols-2" // Make single item take full width
+        )}>
             {stores.map((store) => (
                 <button
                     key={store.id}
@@ -72,23 +98,42 @@ export const StoreSelection = ({ mode = 'PARTNER' }: StoreSelectionProps) => {
                         "group relative flex flex-col items-start p-8 h-full min-h-[220px]",
                         "bg-zinc-900 border border-zinc-800/60 rounded-3xl",
                         "hover:bg-zinc-800/80 hover:shadow-2xl",
-                        isPartner ? "hover:border-emerald-500/30 hover:shadow-emerald-500/10" : "hover:border-orange-500/30 hover:shadow-orange-500/10",
+                        isPartner
+                            ? "hover:border-emerald-500/30 hover:shadow-emerald-500/10"
+                            : isPerformance
+                                ? "hover:border-purple-500/30 hover:shadow-purple-500/10"
+                                : "hover:border-orange-500/30 hover:shadow-orange-500/10",
                         "active:scale-[0.98]",
                         "transition-all duration-300 ease-out text-left overflow-hidden"
                     )}
                 >
                     {/* Default decorative gradient on hover */}
                     <div className={clsx(
-                        "absolute inset-0 bg-gradient-to-br from-emerald-500/0 via-transparent to-transparent transition-colors duration-500",
-                        isPartner ? "group-hover:from-emerald-500/5" : "group-hover:from-orange-500/5"
+                        "absolute inset-0 bg-gradient-to-br transition-colors duration-500",
+                        isPartner
+                            ? "from-emerald-500/0 group-hover:from-emerald-500/5 via-transparent to-transparent"
+                            : isPerformance
+                                ? "from-purple-500/0 group-hover:from-purple-500/5 via-transparent to-transparent"
+                                : "from-orange-500/0 group-hover:from-orange-500/5 via-transparent to-transparent"
                     )} />
 
                     {/* Icon Badge */}
                     <div className={clsx(
                         "relative mb-6 p-4 rounded-2xl bg-zinc-950 border border-zinc-800 transition-colors duration-300",
-                        isPartner ? "group-hover:border-emerald-500/30 group-hover:bg-emerald-500/10" : "group-hover:border-orange-500/30 group-hover:bg-orange-500/10"
+                        isPartner
+                            ? "group-hover:border-emerald-500/30 group-hover:bg-emerald-500/10"
+                            : isPerformance
+                                ? "group-hover:border-purple-500/30 group-hover:bg-purple-500/10"
+                                : "group-hover:border-orange-500/30 group-hover:bg-orange-500/10"
                     )}>
-                        <StoreIcon className={clsx("w-8 h-8 text-zinc-400 transition-colors", isPartner ? "group-hover:text-emerald-400" : "group-hover:text-orange-400")} />
+                        <StoreIcon className={clsx(
+                            "w-8 h-8 text-zinc-400 transition-colors",
+                            isPartner
+                                ? "group-hover:text-emerald-400"
+                                : isPerformance
+                                    ? "group-hover:text-purple-400"
+                                    : "group-hover:text-orange-400"
+                        )} />
                     </div>
 
                     {/* Content */}
@@ -101,9 +146,13 @@ export const StoreSelection = ({ mode = 'PARTNER' }: StoreSelectionProps) => {
                         <div className="mt-auto pt-4 flex items-center justify-end w-full border-t border-zinc-800/50 group-hover:border-zinc-700/50 transition-colors">
                             <div className={clsx(
                                 "flex items-center gap-1 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 font-medium text-sm",
-                                isPartner ? "text-emerald-500" : "text-orange-500"
+                                isPartner
+                                    ? "text-emerald-500"
+                                    : isPerformance
+                                        ? "text-purple-500"
+                                        : "text-orange-500"
                             )}>
-                                {isPartner ? 'Acessar Painel' : 'Novo Pedido'} <ChevronRight className="w-4 h-4" />
+                                {isPartner ? 'Acessar Painel' : isPerformance ? 'Conferir Resultados Teste' : 'Novo Pedido'} <ChevronRight className="w-4 h-4" />
                             </div>
                         </div>
                     </div>

@@ -9,8 +9,13 @@ spring:
 
   jpa:
     open-in-view: false
-    show-sql: true
+    show-sql: false
     properties:
       hibernate:
         ddl-auto: validate
-        format_sql: true
+        format_sql: false
+
+logging:
+  level:
+    root: INFO
+    com.cocobambu.delivery: INFO
