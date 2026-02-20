@@ -96,39 +96,35 @@ docker compose up --build
 
 ---
 
-## ⚙️ Variáveis de Ambiente
-
-Criei o sistema de chamadas HTTP já pensando na modularidade das URLs da API. Para customizar a rota, basta criar um arquivo `.env` na raiz da pasta `Frontend/`.
-
-Dê uma olhada na estrutura necessária (baseando-se no que uso por padrão dentro do `src/api`):
-
-**`.env.example`**
-```env
-# URL Base apontando para a sua instância do Backend (Spring Boot)
-VITE_API_URL=http://localhost:8080/api/v1
-```
-
-*(Se o arquivo `.env` não existir, configurei a base interna do app para utilizar nativamente um fallback para `http://localhost:8080/api/v1` nas instâncias do serviço.)*
-
----
-
 ## 📸 Screenshots e Telas da Aplicação
 
-Aqui estão algumas capturas de tela finais com os resultados obtidos da UI/UX aplicada:
+### 1. Tela Inicial e Seleção de Módulos
+A página inicial foi segmentada para separar claramente o fluxo operacional do parceiro, o simulador de pedidos e a área isolada para testes de performance.
 
-*(Reservei de propósito este espaço para incluir as fotos ou GIFs mostrando as telas funcionais)*
+| Área do Parceiro | Simulador de Pedidos | Área de Teste de Carga |
+|:---:|:---:|:---:|
+| ![Área do Parceiro](../docs/home_area_parceiro.png) | ![Simulador](../docs/home_area_pedidos.png) | ![Teste de Carga](../docs/home_teste_de_carga.png) |
 
-### Tela Inicial (Seleção e Teste de Carga)
-![Selection Page](./docs/selection_page.png)
+### 2. Fluxo do Simulador de Pedidos (Cliente)
+O simulador guia o usuário desde a identificação até o pagamento, passando por endereço e seleção de itens com adicionais.
 
-### Simulador e Carrinho de Pedidos
-![New Order Simulator](./docs/new_order.png)
+| Identificação | Endereço de Entrega | Cardápio | Pagamento |
+|:---:|:---:|:---:|:---:|
+| ![Identificação](../docs/criacao_pedido_identificacao_e1.png) | ![Endereço](../docs/criacao_pedido_endereco_e2.png) | ![Cardápio](../docs/criacao_pedidos_cardapio_e3.png) | ![Pagamento](../docs/criacao_pedido_pagamento_e4.png) |
 
-### Dashboard de Acompanhamento (Painel do Restaurante)
-![Dashboard](./docs/dashboard.png)
+*Detalhe do modal de condimentos e adicionais:*
+![Modal de Item](../docs/condimentos_e_detalhes_item_e3_1.png)
 
-### Kanban e Máquina de Estados (Edição do Delivery)
-![Order Details](./docs/order_details.png)
+### 3. Dashboard Operacional (Restaurante)
+Visão geral dos pedidos da loja selecionada, com listagem, paginação e visualização clara dos status.
+
+![Dashboard](../docs/dashboard_listagem_pedidos.png)
+
+### 4. Detalhes do Pedido e Máquina de Estados
+Tela principal para a operação da loja, permitindo visualizar itens, dados do cliente e, crucialmente, avançar o status do pedido (ex: de "Recebido" para "Confirmado") e editar informações de entrega.
+
+![Detalhes do Pedido - Topo](../docs/info_pedido_1.png)
+![Detalhes do Pedido - Rodapé](../docs/info_pedido_2.png)
 
 ---
-Feito com ☕ e TypeScript por [Seu Nome/Você].
+Feito com ☕ e TypeScript por Matheus Cunha.
