@@ -22,8 +22,9 @@ A maneira mais fácil e recomendada de rodar a aplicação é utilizando o Docke
 ### Passo a Passo
 
 1. Clone este repositório para a sua máquina.
-2. Abra o terminal na **raiz do projeto** (onde está o arquivo `docker-compose.yml`).
-3. Execute o comando de build e inicialização:
+2. Renomeie o arquivo `.env.example` (localizado na raiz do projeto) para `.env`. Você pode manter as credenciais e variáveis padrão que já estão preenchidas nele.
+3. Abra o terminal na **raiz do projeto** (onde está o arquivo `docker-compose.yml`).
+4. Execute o comando de build e inicialização:
 
    *No Linux/macOS ou Windows (PowerShell/CMD):*
    ```bash

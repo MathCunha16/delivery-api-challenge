@@ -78,6 +78,8 @@ A aplicação foi construída sob a **Arquitetura MVC (Model-View-Controller)**,
 
 ## 🏃 Como Executar o Projeto
 
+> ⚠️ **Configuração Inicial (.env):** Antes de executar qualquer comando abaixo, certifique-se de ir até a **raiz principal do projeto** (uma pasta acima deste backend) e renomear o arquivo `.env.example` para `.env`. As credenciais padrão já estão preenchidas e prontas para uso.
+
 ### Opção 1: Execução Completa via Docker (Recomendada)
 Esta é a maneira mais rápida. O comando irá subir de uma vez o **Banco de Dados, a API (Backend) e o Frontend**.
 1. No seu terminal, navegue até a **raiz principal do projeto** (uma pasta acima deste backend).
