@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { X, Save, Key } from 'lucide-react';
+import { X, Save } from 'lucide-react';
 import type { Order } from '../../types';
 import { updateOrder } from '../../api/orderService';
 

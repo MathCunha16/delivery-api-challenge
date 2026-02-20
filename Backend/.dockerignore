@@ -1,0 +1,25 @@
+# Gradle build artifacts
+build/
+.gradle/
+
+# IDE configuration
+.idea/
+
+# Git
+.git/
+.gitignore
+.gitattributes
+
+# Tests
+src/test/
+
+# Docker
+Dockerfile
+.dockerignore
+
+# Documentation
+*.md
+
+# Security
+.env
+*.env
