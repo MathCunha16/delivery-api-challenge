@@ -55,7 +55,7 @@ const NewOrderPage = () => {
         customer: { name: '', phone: '' },
         address: {
             zipCode: '', street: '', number: '', neighborhood: '',
-            city: 'Goiânia', state: 'GO', reference: ''
+            city: '', state: 'GO', reference: ''
         },
         cart: [],
         payment: { method: 'CREDIT_CARD', prepaid: false }
@@ -318,6 +318,52 @@ const NewOrderPage = () => {
                                     onChange={e => updateFormData('address', { neighborhood: e.target.value })}
                                     className="w-full bg-zinc-900 border border-zinc-700 rounded-lg p-3 text-white focus:ring-2 focus:ring-orange-500 outline-none"
                                 />
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium text-zinc-400 mb-1">Cidade</label>
+                                <input
+                                    type="text"
+                                    value={formData.address.city}
+                                    onChange={e => updateFormData('address', { city: e.target.value })}
+                                    className="w-full bg-zinc-900 border border-zinc-700 rounded-lg p-3 text-white focus:ring-2 focus:ring-orange-500 outline-none"
+                                />
+                            </div>
+                            <div className="col-span-1">
+                                <label className="block text-sm font-medium text-zinc-400 mb-1">Estado</label>
+                                <select
+                                    value={formData.address.state}
+                                    onChange={e => updateFormData('address', { state: e.target.value })}
+                                    className="w-full bg-zinc-900 border border-zinc-700 rounded-lg p-3.5 text-white focus:ring-2 focus:ring-orange-500 outline-none appearance-none"
+                                >
+                                    <option value="" disabled>Selecione</option>
+                                    <option value="AC">Acre</option>
+                                    <option value="AL">Alagoas</option>
+                                    <option value="AP">Amapá</option>
+                                    <option value="AM">Amazonas</option>
+                                    <option value="BA">Bahia</option>
+                                    <option value="CE">Ceará</option>
+                                    <option value="DF">Distrito Federal</option>
+                                    <option value="ES">Espírito Santo</option>
+                                    <option value="GO">Goiás</option>
+                                    <option value="MA">Maranhão</option>
+                                    <option value="MT">Mato Grosso</option>
+                                    <option value="MS">Mato Grosso do Sul</option>
+                                    <option value="MG">Minas Gerais</option>
+                                    <option value="PA">Pará</option>
+                                    <option value="PB">Paraíba</option>
+                                    <option value="PR">Paraná</option>
+                                    <option value="PE">Pernambuco</option>
+                                    <option value="PI">Piauí</option>
+                                    <option value="RJ">Rio de Janeiro</option>
+                                    <option value="RN">Rio Grande do Norte</option>
+                                    <option value="RS">Rio Grande do Sul</option>
+                                    <option value="RO">Rondônia</option>
+                                    <option value="RR">Roraima</option>
+                                    <option value="SC">Santa Catarina</option>
+                                    <option value="SP">São Paulo</option>
+                                    <option value="SE">Sergipe</option>
+                                    <option value="TO">Tocantins</option>
+                                </select>
                             </div>
                             <div className="col-span-2">
                                 <label className="block text-sm font-medium text-zinc-400 mb-1">Referência</label>
