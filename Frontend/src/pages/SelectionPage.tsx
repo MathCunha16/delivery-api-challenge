@@ -1,5 +1,7 @@
 import { StoreSelection } from '../features/stores/components/StoreSelection';
-import { LayoutDashboard, ShoppingCart, ChevronDown } from 'lucide-react';
+import { LayoutDashboard, ShoppingCart, ChevronDown, Activity } from 'lucide-react';
+
+const PERFORMANCE_STORE_ID = "99999999-9999-9999-9999-999999999999";
 
 const SelectionPage = () => {
     return (
@@ -8,6 +10,7 @@ const SelectionPage = () => {
             <div className="fixed top-0 left-1/2 -translate-x-1/2 w-full h-full max-w-7xl pointer-events-none z-0">
                 <div className="absolute top-[-10%] left-[20%] w-[500px] h-[500px] bg-emerald-500/10 rounded-full blur-[120px]" />
                 <div className="absolute bottom-[-10%] right-[20%] w-[500px] h-[500px] bg-orange-500/10 rounded-full blur-[120px]" />
+                <div className="absolute top-[50%] left-[50%] w-[600px] h-[600px] bg-purple-500/5 rounded-full blur-[150px]" />
             </div>
 
             {/* PARTNER AREA (Hero) */}
@@ -25,7 +28,7 @@ const SelectionPage = () => {
                         </p>
                     </div>
 
-                    <StoreSelection mode="PARTNER" />
+                    <StoreSelection mode="PARTNER" excludeStoreId={PERFORMANCE_STORE_ID} />
 
                     {/* Scroll Indicator */}
                     <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-zinc-600 animate-bounce">
@@ -50,7 +53,40 @@ const SelectionPage = () => {
                         </p>
                     </div>
 
-                    <StoreSelection mode="SIMULATOR" />
+                    <StoreSelection mode="SIMULATOR" excludeStoreId={PERFORMANCE_STORE_ID} />
+
+                    {/* Scroll Indicator to Test Area */}
+                    <div className="mt-16 flex flex-col items-center gap-2 text-zinc-600 animate-bounce">
+                        <span className="text-xs font-medium tracking-widest uppercase">Teste de Carga</span>
+                        <ChevronDown className="w-6 h-6" />
+                    </div>
+                </div>
+            </section>
+
+            {/* PERFORMANCE AREA */}
+            <section className="min-h-screen flex flex-col items-center justify-center p-6 relative z-10 bg-zinc-900/50 backdrop-blur-3xl border-t border-zinc-800">
+                <div className="w-full max-w-5xl flex flex-col items-center">
+                    <div className="mb-12 text-center space-y-4">
+                        <div className="inline-flex items-center justify-center p-3 rounded-2xl bg-zinc-950 border border-purple-500/20 shadow-xl mb-6 shadow-purple-500/10">
+                            <Activity className="w-8 h-8 text-purple-500" />
+                        </div>
+                        <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-transparent bg-clip-text bg-gradient-to-br from-purple-400 to-zinc-500">
+                            Teste de Carga
+                        </h2>
+                        <p className="text-zinc-400 text-lg max-w-md mx-auto">
+                            Área reservada para injeção massiva de pedidos e validação de resiliência e concorrência no backend.
+                        </p>
+                    </div>
+
+                    <div className="flex justify-center w-full max-w-3xl">
+                        <div className="w-full h-full md:col-span-2 md:w-full">
+                            <StoreSelection
+                                mode="SIMULATOR"
+                                includeOnlyStoreId={PERFORMANCE_STORE_ID}
+                                customStyle="PERFORMANCE"
+                            />
+                        </div>
+                    </div>
                 </div>
             </section>
         </div>
